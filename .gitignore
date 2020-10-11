@@ -1,0 +1,8 @@
+# database configuration and other secret stuff
+/load.php
+
+# some other secret files
+/load-post-secret.php
+
+# the admin files can be symlinked from suckless-conference/admin
+/admin
