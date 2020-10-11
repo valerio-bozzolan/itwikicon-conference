@@ -57,6 +57,6 @@ register_default_language( 'it_IT' );
 
 // eventually allow to call some other things when everything is loaded
 // e.g. this is useful to do a kind of if IP !== xxx then redirect after everything is loaded
-if( file_exists( 'load-post-secret.php' ) ) {
-	require 'load-post-secret.php';
+if( file_exists( __DIR__ . '/load-post-secret.php' ) ) {
+	require __DIR__ . '/load-post-secret.php';
 }
