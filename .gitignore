@@ -6,3 +6,6 @@
 
 # the admin files can be symlinked from suckless-conference/admin
 /admin
+
+# command line interface often symlinked from suckles-conference/cli
+/cli
