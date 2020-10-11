@@ -30,3 +30,6 @@ define( 'THIS_CONFERENCE_UID', 'itwikicon-2020' );
 
 // require the upstream generic configuration file shared for all the conferences
 require __DIR__ . '/../load.php';
+
+// require some custom 2020 stuff
+require __DIR__ . '/include/functions.php';
