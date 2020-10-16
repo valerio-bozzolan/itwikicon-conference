@@ -5,7 +5,10 @@
 /load-post-secret.php
 
 # the admin files can be symlinked from suckless-conference/admin
-/admin
+admin
+
+# the api files can be symlinked from suckless-conference/admin
+api
 
 # command line interface often symlinked from suckles-conference/cli
 /cli

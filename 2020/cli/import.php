@@ -36,6 +36,14 @@ if( !$conference ) {
 // current Confererence ID
 $conference_ID = $conference->getConferenceID();
 
+// room number to Room ID
+$ROOMS = [
+	'1' => 36,
+	'2' => 37,
+	'1 e 2' => 26,
+	'caccia al tesoro' => 38,
+];
+
 // template arguments
 TemplateArg::add( 'titolo' );
 TemplateArg::add( 'abstract' );
@@ -45,6 +53,15 @@ TemplateArg::add( 'chi' );
 TemplateArg::add( 'giorno' );
 TemplateArg::add( 'ora inizio' );
 TemplateArg::add( 'ora fine' );
+TemplateArg::add( 'traccia', function ( $track ) use ( $ROOMS ) {
+
+	$track = $ROOMS[ $track ] ?? null;
+	if( !$track ) {
+		error( "bad room $track" );
+	}
+
+	return $track;
+} );
 
 // wikimedia meta
 $meta = \wm\MetaWiki::instance();
@@ -93,6 +110,12 @@ foreach( $queries as $query ) {
 
 		// page ID
 		$pageid = $page->pageid;
+
+		// page title
+		$page_title = $page->title;
+
+		// Meta-wiki page URL
+		$page_url = 'https://meta.wikimedia.org/wiki/' . str_replace( ' ', '_', $page_title );
 
 		// revisions is an array of just one element
 		$revisions = $page->revisions ?? [];
@@ -145,6 +168,7 @@ foreach( $queries as $query ) {
 					$ora_fine          = TemplateArgValue::findAndGetValue( $template_values, 'ora fine' );
 					$event_description = TemplateArgValue::findAndGetValue( $template_values, 'descrizione' );
 					$lingua            = TemplateArgValue::findAndGetValue( $template_values, 'lingua', 'it' );
+					$room_ID           = TemplateArgValue::findAndGetValue( $template_values, 'traccia' );
 
 					// 24 ottobre
 					$giorno_dd_mm = explode( ' ', $giorno );
@@ -164,16 +188,36 @@ foreach( $queries as $query ) {
 						$ora_fine
 					);
 
+					// event UID
 					$event_uid = generate_slug( $event_title );
 
 					// option used to remember the Meta pageid -> Event ID
-					$option_name = "event-from-meta-pageid-$pageid";
+					$option_name_meta_pageid = "event-from-meta-pageid-$pageid";
+
+					// basic data to be always updated
+					$basic_data = [
+						'event_title'               => $event_title,
+						'event_url'                 => $page_url,
+						'event_uid'                 => $event_uid,
+						"event_description_$lingua" => $event_description,
+						"event_abstract_$lingua"    => $abstract,
+						"event_note_$lingua"        => $note,
+						'event_language'            => $lingua,
+						'event_start'               => $event_start,
+						'event_end'                 => $event_end,
+						'room_ID'                   => $room_ID,
+					];
 
 					// check if this page is new
-					$event_ID = get_option( $option_name );
+					$event_ID = get_option( $option_name_meta_pageid );
 					if( $event_ID ) {
 
 						// update
+						echo "Updating $event_title\n";
+
+						( new QueryEvent() )
+							->whereEventID( $event_ID )
+							->update( $basic_data );
 
 					} else {
 
@@ -183,21 +227,14 @@ foreach( $queries as $query ) {
 
 						// insert
 						( new QueryEvent() )
-							->insertRow( [
+							->insertRow( array_merge( $basic_data, [
 								'conference_ID'             => $conference_ID,
-								'event_title'               => $event_title,
 								'event_uid'                 => $event_uid,
-								"event_description_$lingua" => $event_description,
-								"event_abstract_$lingua"    => $abstract,
-								"event_note_$lingua"        => $note,
-								'event_language'            => $lingua,
-								'event_start'               => $event_start,
-								'event_end'                 => $event_end,
-							] );
+							] ) );
 
 						$event_ID = last_inserted_ID();
 
-						set_option( $option_name, $event_ID, false );
+						set_option( $option_name_meta_pageid, $event_ID, false );
 
 						query( 'COMMIT' );
 					}
@@ -211,21 +248,31 @@ class TemplateArg {
 
 	private $name;
 
+	private $callback;
+
 	public static $args = [];
 
-	public function __construct( $name ) {
+	public function __construct( $name, $callback ) {
 		$this->name = $name;
+		$this->callback = $callback;
 	}
 
 	public function getName() {
 		return $this->name;
 	}
 
+	public function normalizeValue( $value ) {
+		if( $this->callback ) {
+			$value = call_user_func( $this->callback, $value );
+		}
+		return $value;
+	}
+
 	/**
 	 * Add a template argument in the known list of arguments
 	 */
-	public static function add( $name ) {
-		self::$args[] = new TemplateArg( $name );
+	public static function add( $name, $callback = null ) {
+		self::$args[] = new TemplateArg( $name, $callback );
 	}
 
 	public static function createValue( $name, $value ) {
@@ -263,11 +310,8 @@ class TemplateArgValue {
 	}
 
 	public function getValue( $default_value = null ) {
-		if( $default_value ) {
-			var_dump( "asd", $default_value );
-		}
-
 		$value = $this->value;
+		$value = $this->arg->normalizeValue( $value );
 		if( !$value ) {
 			$value = $default_value;
 		}
