@@ -51,14 +51,14 @@ template_2020( 'header', [
 					esc_html( $conference->getConferenceSubtitle() )
 				) ?></p>
 				<p class="flow-text"><?= esc_html( __( "Quest'anno l'evento si terrà completamente online!" ) ) ?></p>
-				<p><a href="#program" class="btn-large waves-effect blue"><i class="material-icons left">access_time</i> <?= __( "Programma Completo" ) ?></a></p>
+				<p><a href="#program-day-2" class="btn-large waves-effect blue smooth-scroll"><i class="material-icons left">access_time</i> <?= __( "Programma Completo" ) ?></a></p>
 			</div>
 		</div>
 	</div>
 
   <!-- survey parallax -->
   <div class="parallax-container valign-wrapper">
-    <div class="parallax"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/ItWikiCon_2020_community_survey_results.jpg/1280px-ItWikiCon_2020_community_survey_results.jpg" alt="Unsplashed background img 2"></div>
+    <div class="parallax"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/ItWikiCon_2020_community_survey_results.jpg/1280px-ItWikiCon_2020_community_survey_results.jpg" alt="itWikiCon community survey post-it"></div>
   </div>
   <!-- end survey parallax -->
 
@@ -66,307 +66,45 @@ template_2020( 'header', [
     <div class="section">
 
       <div class="row">
-        <div class="col s12 center" id="program-day-1">
+
+	<div class="col s12">
+		<div class="card-panel orange">
+			<p class="flow-text"><?= __( "Stanco dei soliti questionari compilabili in meno di un'ora e 45 minuti? Prova il nostro!" ) ?></p>
+			<p><a href="https://survey.gitpull.it/index.php/543181?lang=it" class="btn-large blue waves-effect">
+				<i class="material-icons left">insert_chart</i>
+				Questionario finale!
+			</a>
+			</p>
+		</div>
+	</div>
+
+        <div class="col s12" id="program-day-1">
           <h3><i class="mdi-content-send brown-text"></i></h3>
-          <h2><?= __( "Programma Completo" ) ?></h2>
+          <h2 class="center-align"><?= __( "Programma completo" ) ?></h2>
 
 	<p class="flow-text"><?= __( "Sessioni 24 ottobre" ) ?></p>
 
-<table class="highlight">
-<tbody>
-<tr>
-<th class="hide-on-small-only"></th>
-<th><?= __( "Stanza 1" ) ?></th>
-<th><?= __( "Stanza 2" ) ?></th>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:00&nbsp;-&nbsp;10:15</td>
-<td colspan="2" rowspan="2" style="background-color:#0c7bc0ff;color:white;text-align:center"><b>Plenaria di apertura</b></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:15&nbsp;-&nbsp;10:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:30&nbsp;-&nbsp;10:45</td>
-<td rowspan="3"><?php event_2020( 269 ) /* Wikimedia 2030: cosa cambierà e come partecipare */ ?></td>
-<td rowspan="3"><?php event_2020( 251 ) /* Introduzione a Wikidata */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:45&nbsp;-&nbsp;11:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:00&nbsp;-&nbsp;11:15</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:15&nbsp;-&nbsp;11:30</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:30&nbsp;-&nbsp;11:45</td>
-<td rowspan="2"><?php event_2020( 263 ) /* progetti fratelli */ ?></td>
-<td rowspan="2"><?php event_2020( 268 ) /* Wikidata per WLM */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:45&nbsp;-&nbsp;12:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:00&nbsp;-&nbsp;12:15</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center;">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:15&nbsp;-&nbsp;12:30</td>
-<td rowspan="4"><?php event_2020( 263 ) /* progetti fratelli */ ?></td>
-<td rowspan="4"><?php event_2020( 244 ) /* Come i piccoli musei possono collaborare con i progetti Wikimedia */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:30&nbsp;-&nbsp;12:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:45&nbsp;-&nbsp;13:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:00&nbsp;-&nbsp;13:15</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:15&nbsp;-&nbsp;13:30</td>
-<td colspan="2" rowspan="4" style="background-color:#d9d2e9;text-align:center"><b>Pranzo</b></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:30&nbsp;-&nbsp;13:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:45&nbsp;-&nbsp;14:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:00&nbsp;-&nbsp;14:15</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:15&nbsp;-&nbsp;14:30</td>
-<td rowspan="2"><?php event_2020( 243 ) /* Certificare le conoscenze Wikimedia: un framework */ ?></td>
-<td rowspan="2"><?php event_2020( 259 ) /* milleuno domande che non vi siete mai fatti ma di cui vi daremo la risposta con SPARQL */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:30&nbsp;-&nbsp;14:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:45&nbsp;-&nbsp;15:00</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:00&nbsp;-&nbsp;15:15</td>
-<td colspan="2" rowspan="4" style="background-color:#faf6d7;text-align:center"><?php event_2020( 241 ) /* Alessandro Barbero */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:15&nbsp;-&nbsp;15:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:30&nbsp;-&nbsp;15:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:45&nbsp;-&nbsp;16:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:00&nbsp;-&nbsp;16:15</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:15&nbsp;-&nbsp;16:30</td>
-<td rowspan="2"><?php event_2020( 260 ) /* Openedu */ ?></td>
-<td rowspan="2"><?php event_2020( 250 ) /* Introduzione a OpenStreetMap */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:30&nbsp;-&nbsp;16:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:45&nbsp;-&nbsp;17:00</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:00&nbsp;-&nbsp;17:15</td>
-<td rowspan="4"><?php event_2020( 265 ) /* Vikidia */ ?></td>
-<td rowspan="4"><?php event_2020( 258 ) /* Mappare il passato: Open History Map */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:15&nbsp;-&nbsp;17:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:30&nbsp;-&nbsp;17:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:45&nbsp;-&nbsp;18:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">18:00&nbsp;-&nbsp;18:15</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">18:15&nbsp;-&nbsp;18:30</td>
-<td rowspan="3" style="background-color:#faf6d7;"><?php event_2020( 257 ) /* Lydia Pintscher: What's new on the Wikidata features this year? */ ?></td>
-<td rowspan="3"><?php event_2020( 246 ) /* Edutainment ai tempi del Covid-19 - Wikipedia & OpenStreetMap al servizio del mondo ludico */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">18:30&nbsp;-&nbsp;18:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">18:45&nbsp;-&nbsp;19:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">19:00&nbsp;-&nbsp;19:15</td>
-<td colspan="2" rowspan="4" style="background-color:#faf6d7;"><?php event_2020( 254 ) /* Katherine Maher */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">19:15&nbsp;-&nbsp;19:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">19:30&nbsp;-&nbsp;19:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">19:45&nbsp;-&nbsp;20:00</td>
-</tr>
-</tbody>
-</table>
+	<?php
+		// print the first day table
+		template_2020( 'day-one' );
+	?>
+
+	<div class="divider"></div>
+
+	<p class="flow-text"><?= __( "Eventi speciali 24 ottobre" ) ?></p>
+
+	<div class="card-panel">
+		<?php event_2020( 242 ) /* caccia al tesoro */ ?>
+	</div>
 
 	<div class="divider" id="program-day-2"></div>
 
-	<p class="flow-text"><?= __( "Sessioni 24 ottobre" ) ?></p>
+	<p class="flow-text"><?= __( "Sessioni 25 ottobre" ) ?></p>
 
-<table class="highlight">
-<tbody>
-<tr>
-<th class="hide-on-small-only"></th>
-<th><?= __( "Stanza 1" ) ?></th>
-<th><?= __( "Stanza 2" ) ?></th>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:00&nbsp;-&nbsp;10:15</td>
-<td colspan="2" rowspan="4" style="background-color:#faf6d7;"><?php event_2020( 253 ) /* Jimbo Wales */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:15&nbsp;-&nbsp;10:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:30&nbsp;-&nbsp;10:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">10:45&nbsp;-&nbsp;11:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:00&nbsp;-&nbsp;11:15</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:15&nbsp;-&nbsp;11:30</td>
-<td rowspan="3"><?php event_2020( 261 ) /* Perché non posso fotografare la piazza del mio paese? */ ?></td>
-<td rowspan="3"><?php event_2020( 248 ) /* Il Daty Pywikibot - Ovvero: come ho imparato a non preoccuparmi e ad amare il web semantico */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:30&nbsp;-&nbsp;11:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">11:45&nbsp;-&nbsp;12:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:00&nbsp;-&nbsp;12:15</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:15&nbsp;-&nbsp;12:30</td>
-<td rowspan="2"><?php event_2020( 255 ) /* La data visualization sui progetti Wikimedia */ ?></td>
-<td rowspan="4"><?php event_2020( 264 ) /* Template e Lua: corso accelerato */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:30&nbsp;-&nbsp;12:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">12:45&nbsp;-&nbsp;13:00</td>
-<td rowspan="2"><?php event_2020( 266 ) /* Voci semi-protette all'infinito */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:00&nbsp;-&nbsp;13:15</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:15&nbsp;-&nbsp;13:30</td>
-<td colspan="2" rowspan="4" style="background-color:#d9d2e9;text-align:center"><b>Pranzo</b> in contemporanea con:<br />
-	<?php event_2020( 247 ) /* Esplorando Busto Arsizio – tour virtuale interattivo */ ?>
-</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:30&nbsp;-&nbsp;13:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">13:45&nbsp;-&nbsp;14:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:00&nbsp;-&nbsp;14:15</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:15&nbsp;-&nbsp;14:30</td>
-<td rowspan="2"><?php event_2020( 256 ) /* La gestione dei conflitti nei progetti Wikimedia, modalità a confronto */ ?></td>
-<td rowspan="2"><?php event_2020( 240 ) /* Accessibilità e usabilità dei progetti Wikimedia */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:30&nbsp;-&nbsp;14:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">14:45&nbsp;-&nbsp;15:00</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:00&nbsp;-&nbsp;15:15</td>
-<td rowspan="3"><?php event_2020( 262 ) /* Qual è il nostro nome? Wikipedia, Wikimedia e il rebranding */ ?></td>
-<td rowspan="3"><?php event_2020( 267 ) /* WikiBase, partendo da zero */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:15&nbsp;-&nbsp;15:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:30&nbsp;-&nbsp;15:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">15:45&nbsp;-&nbsp;16:00</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:00&nbsp;-&nbsp;16:15</td>
-<td rowspan="3"><?php event_2020( 272 ) /* Wikisource: gli strumenti per facilitarsi la vita */ ?></td>
-<td rowspan="3"><?php event_2020( 252 ) /* itWikicon nei prossimi anni */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:15&nbsp;-&nbsp;16:30</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:30&nbsp;-&nbsp;16:45</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">16:45&nbsp;-&nbsp;17:00</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:00&nbsp;-&nbsp;17:15</td>
-<td><?php event_2020( 270 ) /* Wikinotizie non è triste come pensate */ ?></td>
-<td><?php event_2020( 245 ) /* Community Health Metrics: presentazione del progetto */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:15&nbsp;-&nbsp;17:30</td>
-<td colspan="2" style="background-color:#d9d2e9;text-align:center">Pausa</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:30&nbsp;-&nbsp;17:45</td>
-<td rowspan="2"><?php event_2020( 249 ) /* Iniziativa per la Sostenibilità – che c'è di nuovo? */ ?></td>
-<td rowspan="2"><?php event_2020( 271 ) /* Wikiproxy: come Wikipedia può sopravvivere alle censure dei governi */ ?></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">17:45&nbsp;-&nbsp;18:00</td>
-</tr>
-<tr>
-<td class="hide-on-small-only">18:00&nbsp;-&nbsp;18:15</td>
-<td colspan="2" rowspan="2" style="background-color:#0c7bc0ff;color:white;text-align:center"><b>Saluti finali</b></td>
-</tr>
-<tr>
-<td class="hide-on-small-only">18:15&nbsp;-&nbsp;18:30</td>
-</tr>
-</tbody>
-</table>
+	<?php
+		// print the second day table
+		template_2020( 'day-two' );
+	?>
 
         </div>
       </div>
@@ -376,9 +114,15 @@ template_2020( 'header', [
 
 	<div class="container">
 		<div class="card-panel">
-			<h3><?= __( "…e molto altro!" ) ?></h3>
+			<p class="flow-text"><?= __( "Vuoi una pausa? Gira fra i poster e incontra gli autori!") ?></p>	
+			<a class="btn blue waves-effect" href="https://meta.wikimedia.org/wiki/ItWikiCon/2020/Poster">
+				<i class="material-icons left">free_breakfast</i>
+				<?= __( "Corridoio poster" ) ?>
+			</a>
+		</div>
+		<div class="card-panel">
 			<p><?= sprintf(
-				__( "Ma non è finita! Ti piace il <b>software libero</b>? e le <b>libertà digitali</b>? Scopri le sessioni parallele al Linux Day 2020!" )
+				__( "Ma non è finita! Ti piacciono il <b>software libero</b> e le <b>libertà digitali</b>? Scopri le sessioni parallele sul sito del Linux Day 2020!" )
 			) ?><br />
 			<a href="https://www.linuxday.it/2020/programma/"><?= __( "Programma Linux Day 2020" ) ?></a></p>
 		</div>
