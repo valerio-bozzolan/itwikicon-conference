@@ -21,7 +21,7 @@
       <div class="row">
 	<div class="col s12 m4 l2">
 		<div class="hide-on-med-and-up center-align">
-			<img class="responsive-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/ItWikiCon_2020_round_sticker.svg/240px-ItWikiCon_2020_round_sticker.svg.png" alt="itWikiCon 2020 logo" />
+			<a href="<?= ROOT ?>/"><img class="responsive-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/ItWikiCon_2020_round_sticker.svg/240px-ItWikiCon_2020_round_sticker.svg.png" alt="itWikiCon 2020 logo" /></a>
 		</div>
 		<div class="hide-on-small-only">
 			<img class="responsive-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/ItWikiCon_2020_round_sticker.svg/240px-ItWikiCon_2020_round_sticker.svg.png" alt="itWikiCon 2020 logo" />
@@ -29,26 +29,55 @@
 	</div>
         <div class="col s12 m8 offset-l2 l8">
           <h5 class="white-text"><?= esc_html( $conference->getConferenceTitle() ) ?></h5>
-          <p class="grey-text text-lighten-4"><?= __( "Questa edizione è interamente organizzata da volontari. Scopri chi siamo e perché lo facciamo." ) ?></p>
-	  <a href="https://meta.wikimedia.org/wiki/itWikiCon/2020/FAQ" class="btn waves-effect white black-text"><?= __( "F.A.Q." ) ?></a>
+          <p class="grey-text text-lighten-4"><?= sprintf(
+		__( "Un ringraziamento a tutti i volontari che hanno reso possibile questa edizione. La prima edizione nazionale, online ed interamente progettata con %s. Buon divertimento!" ),
+		HTML::a(
+			__( "https://it.wikipedia.org/wiki/Software_libero" ),
+			__( "Software Libero" ),
+			null,
+			'white-text'
+		)
+	  ) ?></p>
+		<p><?= sprintf(
+			__( "Salvo ove diversamente indicato i contenuti sono liberamente rilasciati in licenza %s" ),
+			Licenses::instance()->get( 'cc-by-sa-4.0' )->getLink( 'blue-text text-lighten-5' )
+		) ?></p>
+
+	  <p><a href="https://meta.wikimedia.org/wiki/itWikiCon/2020/FAQ" class="btn waves-effect white black-text"><i class="material-icons left">sentiment_very_satisfied</i><?= __( "Domande frequenti" ) ?></a></p>
         </div>
       </div>
     </div>
     <div class="footer-copyright">
       <div class="container">
-      	<?= sprintf(
-		__( "Realizzato dai %s" ),
-		'<a class="blue-text text-lighten-5" href="https://phabricator.wikimedia.org/tag/itwikicon-2020/">' . __( "volontari itWikiCon 2020" ) . '</a>'
+	<p>
+      	<?= HTML::a(
+		'https://meta.wikimedia.org/wiki/ItWikiCon/2020/Team',
+		__( "Realizzato dai volontari itWikiCon 2020" ),
+		null,
+		'blue-text text-lighten-5'
+	) ?> |
+	<?= HTML::a(
+		'https://phabricator.wikimedia.org/tag/itwikicon-2020/',
+		__( "Segnala un'idea o un problema" ),
+		null,
+		'blue-text text-lighten-5'
 	) ?>
+	</p>
+	<p>
+	  <p><a class="white-text" href="https://www.itwikicon.org/privacy-policy/"><?=  __( "Informativa sulla privacy per il sito" ) ?></a>.
+	     <a class="white-text" href="https://www.garr.tv/page/privacy-policy-it"><?= __( "Informativa sulla privacy per le dirette e la chat" ) ?></a>.
+	</p>
       </div>
     </div>
   </footer>
 
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+  <script src="/javascript/jquery/jquery.min.js"></script>
+  <script src="<?= ROOT ?>/js/materialize.js"></script>
+  <script src="<?= ROOT ?>/js/init.js"></script>
+
+  <?php template_2020( 'matomo' ) ?>
 
   </body>
 </html>

@@ -15,6 +15,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// query all the Users maintaining this Event
+$users =
+	( new QueryEventUser() )
+		->joinUser()
+		->whereEvent( $event )
+		->orderByEventUserOrder()
+		->queryGenerator();
 ?>
 
 	<div class="event-track-<?= $event->getTrackUID() ?> event-id-<?= $event->getEventID() ?>">
@@ -23,14 +30,64 @@
 			<b><?= esc_html( $event->getEventLanguage() ) ?></b>
 		<?php endif ?>
 
-		<a href="<?= esc_attr( $event->getEventURL() ) ?>" class="flow-text"><?= esc_html( $event->getEventTitle() ) ?></a>
+		<p class="flow-text event-brief-title">
+		<?php if( $event->isEventAborted() ): ?>
+			<s><a href="<?= esc_attr( $event->getEventStandardURL() ) ?>"><?= esc_html( $event->getEventTitle() ) ?></a></s>
+			<em><?= __( "sessione annullata" ) ?></em>
+		<?php else: ?>
+			<a href="<?= esc_attr( $event->getEventStandardURL() ) ?>"><?= esc_html( $event->getEventTitle() ) ?></a>
 
-		<div>
+		<?php endif ?>
+		</p>
+
+		<div class="event-hour">
 			<?= $event->getEventStart( 'H:i' ) ?>&ndash;<?= $event->getEventEnd( 'H:i' ) ?>
 		</div>
-		<div>
-			<em><?= esc_html( $event->getRoomName() ) ?></em>
+
+		<div class="itwikicon-users">
+			<?php foreach( $users as $user ): ?>
+
+				<div class="itwikicon-user">
+				<?php
+
+					// check if the User has an account in Wikimedia Meta-wiki
+					if( $user->has( User::META_WIKI ) ) {
+
+						// print the Meta-wiki permalink
+						echo HTML::a(
+							$user->getUserMetaWikiURL(),
+							esc_html( $user->getUserDisplayName() )
+						);
+
+
+					} else {
+
+						echo esc_html( $user->getUserDisplayName() );
+
+					}
+
+				?>
+				</div>
+
+			<?php endforeach ?>
 		</div>
+
+		<!-- print the view button only if the event is not aborted nor passed -->
+		<?php if( !$event->isEventAborted() && !$event->isEventPassed() ): ?>
+
+			<div class="event-room">
+				<p class="right-align"><?= HTML::a(
+					$event->getRoomURL(),
+					$event->getRoomName().
+					'<i class="material-icons right">play_arrow</i>',
+					null,
+					'btn white blue-text waves-effect'
+				) ?>
+				</p>
+			</div>
+
+		<?php endif ?>
+		<!-- end print the view button only if the event is not aborted nor passed -->
 
 		<?php if( $event->isEventEditable() ): ?>
 			<?= HTML::a(
@@ -38,4 +95,5 @@
 				'[edit]'
 			) ?>
 		<?php endif ?>
+
 	</div>

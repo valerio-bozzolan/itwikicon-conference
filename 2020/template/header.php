@@ -15,6 +15,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Available arguments:
+ *
+ * $title: page title
+ */
 ?>
 <!DOCTYPE html>
 <html lang="<?= latest_language()->getISO() ?>">
@@ -23,14 +28,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title><?= esc_html( sprintf(
 	__( "%s - %s" ),
-	$conference->getConferenceTitle(),
-	$conference->getConferenceSubtitle(),
+	$title ?? $conference->getConferenceTitle(),
+	isset( $title ) ? $conference->getConferenceTitle() : $conference->getConferenceSubtitle()
   ) ) ?></title>
 
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+  <link href="<?= ROOT ?>/css/material-design-iconfont/material-design-icons.css" rel="stylesheet" />
+  <link href="<?= ROOT ?>/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="<?= ROOT ?>/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="icon" type="image/jpeg" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/ItWikiCon_2020_coin_version.svg/36px-ItWikiCon_2020_coin_version.svg.png" />
+  <link rel="copyright" href="//creativecommons.org/licenses/by-sa/4.0/" />
+  <meta name="generator" content="suckless-conference" />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/ItWikiCon2020_Dante.svg/1024px-ItWikiCon2020_Dante.svg.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<?= URL ?>/" />
+  <meta property="og:title" content="itWikiCon 2020" />
+  <meta property="og:description" content="La conferenza nazionale dei progetti Wikimedia" />
 </head>
 <body>
   <nav class="white" role="navigation">
@@ -43,7 +57,7 @@
       </a>
 
       <ul class="right">
-        <li><a href="#program-day-1"><?= __( "Programma" ) ?></a></li>
+        <li><a class="smooth-scroll" href="<?= ROOT ?>/#program-day-2"><?= __( "Programma" ) ?></a></li>
       </ul>
 
     </div>

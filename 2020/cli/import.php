@@ -40,8 +40,9 @@ $conference_ID = $conference->getConferenceID();
 $ROOMS = [
 	'1' => 36,
 	'2' => 37,
-	'1 e 2' => 26,
+	'1 e 2' => 36,
 	'caccia al tesoro' => 38,
+	'ospiti' => 39,
 ];
 
 // template arguments
@@ -115,7 +116,7 @@ foreach( $queries as $query ) {
 		$page_title = $page->title;
 
 		// Meta-wiki page URL
-		$page_url = 'https://meta.wikimedia.org/wiki/' . str_replace( ' ', '_', $page_title );
+		$page_url = 'https://meta.wikimedia.org/wiki/' . urlencode( str_replace( ' ', '_', $page_title ) );
 
 		// revisions is an array of just one element
 		$revisions = $page->revisions ?? [];
@@ -161,6 +162,7 @@ foreach( $queries as $query ) {
 					// finally extract the template parameters
 					// $pageid
 					$event_title       = TemplateArgValue::findAndGetValue( $template_values, 'titolo' );
+					$event_who         = TemplateArgValue::findAndGetValue( $template_values, 'chi' );
 					$abstract          = TemplateArgValue::findAndGetValue( $template_values, 'abstract' );
 					$note              = TemplateArgValue::findAndGetValue( $template_values, 'note' );
 					$giorno            = TemplateArgValue::findAndGetValue( $template_values, 'giorno' );
@@ -169,6 +171,10 @@ foreach( $queries as $query ) {
 					$event_description = TemplateArgValue::findAndGetValue( $template_values, 'descrizione' );
 					$lingua            = TemplateArgValue::findAndGetValue( $template_values, 'lingua', 'it' );
 					$room_ID           = TemplateArgValue::findAndGetValue( $template_values, 'traccia' );
+
+					// parse the wikitext
+					$event_description = from_wikitext_to_html( $meta, $event_description );
+					$abstract          = from_wikitext_to_html( $meta, $abstract );
 
 					// 24 ottobre
 					$giorno_dd_mm = explode( ' ', $giorno );
@@ -208,6 +214,9 @@ foreach( $queries as $query ) {
 						'room_ID'                   => $room_ID,
 					];
 
+					// start a MariaDB transaction
+					query( 'START TRANSACTION' );
+
 					// check if this page is new
 					$event_ID = get_option( $option_name_meta_pageid );
 					if( $event_ID ) {
@@ -238,10 +247,124 @@ foreach( $queries as $query ) {
 
 						query( 'COMMIT' );
 					}
+
+					// wiki usernames
+					$wiki_usernames = suck_wiki_usernames( $event_who );
+					foreach( $wiki_usernames as $wiki_username ) {
+
+						// check if an user associated to this Meta-wiki nick exists
+						$user_talk =
+							( new QueryUser() )
+								->whereMetaUsername( $wiki_username )
+								->queryRow();
+
+						if( $user_talk ) {
+
+							$user_talk_ID = $user_talk->getUserID();
+
+
+						} else {
+
+							// eventually guess the user surname
+							$name_parts = explode( ' ', $wiki_username, 2 );
+							$user_name    = $name_parts[0] ?? $wiki_username;
+							$user_surname = $name_parts[1] ?? '';
+
+							// eventually strip "(ASD)" from surname
+							if( $user_surname ) {
+								$user_surname_parts = explode( ' (', 2 );
+								$user_surname = $user_surname_parts[0] ?? $user_surname;
+							}
+
+							// create the User
+							( new QueryUser() )
+								->insertRow( [
+									User::UID       => generate_slug( $wiki_username ),
+									User::NAME      => $user_name,
+									User::SURNAME   => $user_surname,
+									User::META_WIKI => $wiki_username,
+									User::IS_PUBLIC => 1,
+									User::IS_ACTIVE => 0,
+									USER::ROLE      => 'user',
+								] );
+
+							echo "Creating $wiki_username\n";
+							$user_talk_ID = last_inserted_ID();
+						}
+
+						// check if that User is related to this Event
+						$user_talk_relation =
+							( new Query() )
+								->from( 'event_user' )
+								->whereInt( User::ID,  $user_talk_ID )
+								->whereInt( Event::ID, $event_ID     )
+								->queryRow();
+
+						// relate the User to this Event
+						if( !$user_talk_relation ) {
+							echo "Connecting to event...\n";
+							insert_row( 'event_user', [
+								User::ID  => $user_talk_ID,
+								Event::ID => $event_ID,
+							] );
+						}
+					}
+
+					// commit the MariaDB transaction
+					query( 'COMMIT' );
 				}
 			}
 		}
 	}
+}
+
+/**
+ * A very dummy function to suck some usernames from the wikitext
+ */
+function suck_wiki_usernames( $wikitext ) {
+
+	$users = [];
+
+	// strange cases:
+	//  [[:it:s:Utente:|OrbiliusMagister]] damn ORBILIUS! asd
+	$founds = preg_match_all( '/\[\[:?User:(.+?)([\|\]])/i', $wikitext, $matches );
+	for( $i = 0; $i < $founds; $i++ ) {
+		$user = trim( $matches[1][$i] );
+		$user = str_replace( '_', ' ', $user );
+
+		// AAAAAAAAAAAASD DAMN MARCO CHEMELLO
+		if( $user === 'Marco Chemello (WMIT)' ) {
+			$user = 'Marcok';
+		}
+
+		$users[] = $user;
+	}
+
+	array_unique( $users );
+
+	return $users;
+}
+
+function from_wikitext_to_html( $wiki, $wikitext ) {
+
+	// no wikitext no party
+	if( !$wikitext ) {
+		return $wikitext;
+	}
+
+	$request =
+		$wiki->fetch( [
+			'action' => 'parse',
+			'contentmodel' => 'wikitext',
+			'text'   => $wikitext,
+			'disablelimitreport' => 1,
+		] );
+
+	$html = $request->parse->text->{'*'} ?? '';
+
+	$html = str_replace( 'href="/wiki/', 'https://meta.wikimedia.org/wiki/', $html );
+
+	return $html;
 }
 
 class TemplateArg {
