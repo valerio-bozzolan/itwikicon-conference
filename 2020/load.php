@@ -28,6 +28,12 @@
 // define latest conference (may be different to the one of the current site)
 define( 'THIS_CONFERENCE_UID', 'itwikicon-2020' );
 
+// room permalink for this conference
+define( 'ROOM_PERMALINK', 'room.php/%2$s' );
+
+// do not put ?l=it in URLs
+define( 'NO_LANGUAGE_IN_URLS', true );
+
 // require the upstream generic configuration file shared for all the conferences
 require __DIR__ . '/../load.php';
 
