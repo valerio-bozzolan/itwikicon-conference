@@ -155,7 +155,7 @@ template_2020( 'header', [
 		<?php endif ?>
 
 		<div class="col s12">
-			<div class="card-panel<?= $event->isEventPassed() ? ' grey' : '' ?>">
+			<div class="card-panel">
 				<?php template_2020( 'event-brief', [ 'event' => $event ] ) ?>
 			</div>
 		</div>
