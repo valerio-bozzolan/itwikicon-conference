@@ -121,6 +121,94 @@ template_2020( 'header', [
 	</div>
 	<?php endif ?>
 
+	<!-- Start files -->
+	<?php $sharables = $event->factorySharebleByEvent()
+		->select( Sharable::fields() )
+		->whereSharableIsRoot()
+		->selectSharableHasChildren()
+		->queryGenerator();
+	?>
+	<?php if( $sharables->valid() ): ?>
+	<div class="section">
+		<div class="row">
+			<?php foreach( $sharables as $sharable ): ?>
+
+				<?php
+					// the sharable may have some children
+					// See https://gitpull.it/T557
+					$child_sharables = [];
+					if( $sharable->get( 'sharable_has_children' ) ) {
+						$child_sharables = ( new QuerySharable() )
+							->whereSharableParent( $sharable )
+							->queryResults();
+					}
+				?>
+
+
+			<div class="col s12">
+				<div class="card-panel">
+				<?php if( $sharable->isSharableDownloadable() ): ?>
+
+					<!-- if video -->
+					<?php if( $sharable->isSharableVideo() ): ?>
+						<h3><?= __( "Rivedi intervento" ) ?></h3>
+
+						<?php if( $event->isEventPassed() ): ?>
+						<div class="event-hour">
+							<p class="flow-text"><?= __( "Rivedi l'intervento del" ) ?> <?= $event->getEventStart( 'd' ) ?> <?= __( "ottobre" ) ?> <?= __( "delle ore" ) ?> <b><?= $event->getEventStart( 'H:i' ) ?>&ndash;<?= $event->getEventEnd( 'H:i' ) ?></b> in stanza "<?= esc_html( $event->getRoomName() ) ?>":</p>
+						</div>
+						<?php endif ?>
+
+						<video class="responsive-video" controls="controls">
+							<source src="<?= esc_attr( $sharable->getSharablePath() ) ?>" type="<?= esc_attr( $sharable->getSharableMIME() ) ?>" />
+							<?php foreach( $child_sharables as $child_sharable ): ?>
+								<source src="<?= esc_attr( $child_sharable->getSharablePath() ) ?>" type="<?= esc_attr( $child_sharable->getSharableMIME() ) ?>" />
+							<?php endforeach ?>
+						</video>
+					<?php endif ?>
+					<!-- end if video -->
+
+						<?php foreach( array_merge( [ $sharable ], $child_sharables ) as $child_sharable ): ?>
+							<p class="flow-text">
+							<?php printf(
+								__("Scarica in formato %s distribuibile sotto licenza %s."),
+								HTML::a(
+									$child_sharable->getSharablePath(),
+									icon_2020('attachment', 'left') .
+									esc_html( $child_sharable->getSharableMIME() ),
+									null,
+									null,
+									'target="_blank"'
+								),
+								$sharable->getSharableLicense()->getLink()
+							) ?>
+							</p>
+						<?php endforeach ?>
+
+				<?php else: ?>
+					<p class="flow-text">
+						<?php printf(
+							__("Vedi %s distribuibile sotto licenza %s."),
+							HTML::a(
+								$sharable->getSharablePath(),
+								icon_2020('share', 'left') .
+								esc_html( $sharable->getSharableTitle( [ 'prop' => true ] ) ),
+								null,
+								null,
+								'target="_blank"'
+							),
+							$sharable->getSharableLicense()->getLink()
+						) ?>
+					</p>
+				<?php endif ?>
+				</div>
+			</div>
+			<?php endforeach ?>
+		</div>
+	</div>
+	<?php endif ?>
+	<!-- End files -->
+
 	<?php if( $event->hasEventAbstract() ): ?>
 		<h3><?= __( "Abstract" ) ?></h3>
 		<div class="card-panel">
@@ -130,6 +218,7 @@ template_2020( 'header', [
 		</div>
 	<?php endif ?>
 
+	<?php if( !$event->isEventPassed() ): ?>
 	<div class="card-panel">
 		<div class="event-hour">
 			<p class="flow-text"><?= __( "Collegati il" ) ?> <?= $event->getEventStart( 'd' ) ?> <?= __( "ottobre" ) ?> <?= __( "alle" ) ?> <b><?= $event->getEventStart( 'H:i' ) ?>&ndash;<?= $event->getEventEnd( 'H:i' ) ?></b> in <?= esc_html( $event->getRoomName() ) ?>.</p>
@@ -139,6 +228,7 @@ template_2020( 'header', [
 			<?= esc_html( $event->getRoomName() ) ?>
 		</a></p>
 	</div>
+	<?php endif ?>
 
 	<div class="card-panel">
 

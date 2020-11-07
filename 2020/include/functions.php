@@ -43,3 +43,21 @@ function event_2020( $id ) {
 		'event' => $event,
 	] );
 }
+
+/**
+ * Print an icon for the 2020 website
+ *
+ * See https://materializecss.com/icons.html
+ *
+ * @param string $name Icon name
+ * @param string $classes CSS classes
+ * @return string
+ */
+function icon_2020( $name, $classes = null ) {
+	$classes = $classes ? " $classes" : '';
+	return sprintf(
+		'<i class="material-icons%s">%s</i>',
+		$classes,
+		$name
+	);
+}
