@@ -89,6 +89,17 @@ $users =
 		<?php endif ?>
 		<!-- end print the view button only if the event is not aborted nor passed -->
 
+		<!-- start event player -->
+		<?php if( $event->get( 'event_has_video' ) ): ?>
+			<p>
+				<a class="btn blue waves-effect" href="<?= esc_attr( $event->getEventURL() ) ?>">
+					<?= icon_2020( 'play_arrow', 'right' ) ?>
+					<?= __( "Rivedi" ) ?>
+				</a>
+			</p>
+		<?php endif ?>
+		<!-- end event player -->
+
 		<?php if( $event->isEventEditable() ): ?>
 			<?= HTML::a(
 				$event->getEventEditURL(),

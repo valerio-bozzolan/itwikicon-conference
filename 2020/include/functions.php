@@ -33,6 +33,13 @@ function event_2020( $id ) {
 
 	$event = ( new QueryEvent() )
 		->whereEventID( $id )
+		->select( Conference::fields() )
+		->select( Event::fields() )
+		->select( Room::fields() )
+		->select( Track::fields() )
+		->select( Room::fields() )
+		->select( Chapter::fields() )
+		->selectEventHasVideo()
 		->joinConference()
 		->joinTrack( 'LEFT' )
 		->joinRoom(  'LEFT' )
