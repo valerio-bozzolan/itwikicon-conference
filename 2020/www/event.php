@@ -109,6 +109,7 @@ foreach( $users as $user ) {
 template_2020( 'header', [
 	'conference' => $conference,
 	'title' => $event->getEventTitle(),
+	'url'   => $event->getEventURL(),
 ] );
 ?>
 

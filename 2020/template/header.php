@@ -20,6 +20,10 @@
  *
  * $title: page title
  */
+
+$page_title = $title ?? $conference->getConferenceTitle();
+
+$page_url = $url ?? URL;
 ?>
 <!DOCTYPE html>
 <html lang="<?= latest_language()->getISO() ?>">
@@ -28,7 +32,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title><?= esc_html( sprintf(
 	__( "%s - %s" ),
-	$title ?? $conference->getConferenceTitle(),
+	$page_title,
 	isset( $title ) ? $conference->getConferenceTitle() : $conference->getConferenceSubtitle()
   ) ) ?></title>
 
@@ -42,8 +46,8 @@
   <meta name="generator" content="suckless-conference" />
   <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/ItWikiCon2020_Dante.svg/1024px-ItWikiCon2020_Dante.svg.png" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="<?= URL ?>/" />
-  <meta property="og:title" content="itWikiCon 2020" />
+  <meta property="og:url" content="<?= esc_attr( site_page( $url, true ) ) ?>/" />
+  <meta property="og:title" content="<?= esc_attr( $page_title ) ?>" />
   <meta property="og:description" content="La conferenza nazionale dei progetti Wikimedia" />
 </head>
 <body>
