@@ -68,3 +68,28 @@ function icon_2020( $name, $classes = null ) {
 		$name
 	);
 }
+
+function event_users_2020( $event, $role ) {
+
+	$users =
+	        ( new QueryEventUser() )
+			->joinUser()
+			->whereEvent( $event )
+			->whereEventUserRole( $role )
+			->orderByEventUserOrder()
+			->queryGenerator();
+
+	return $users;
+}
+
+function user_link_2020( $user ) {
+
+	$name = esc_html( $user->getUserDisplayName() );
+
+	// print the Meta-wiki permalink
+	if( $user->has( User::META_WIKI ) ) {
+		$name = HTML::a( $user->getUserMetaWikiURL(), $name );
+	}
+
+	return $name;
+}

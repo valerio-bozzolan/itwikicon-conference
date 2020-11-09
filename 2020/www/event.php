@@ -82,26 +82,18 @@ if( site_page( $_SERVER['REQUEST_URI'], true ) !== $event->getEventStandardURL( 
 	http_redirect( $event->getEventStandardURL( true ) );
 }
 
-$users =
-	( new QueryEventUser() )
-		->joinUser()
-		->whereEvent( $event )
-		->orderByEventUserOrder()
-		->queryGenerator();
+// Event speakers
+$speakers   = event_users_2020( $event, 'speaker'    );
+$moderators = event_users_2020( $event, 'moderator' );
 
-$user_links = [];
-foreach( $users as $user ) {
-
-	// check if the User has an account in Wikimedia Meta-wiki
-	if( $user->has( User::META_WIKI ) ) {
-		// print the Meta-wiki permalink
-		$user_links[] = HTML::a(
-			$user->getUserMetaWikiURL(),
-			esc_html( $user->getUserDisplayName() )
-		);
-	} else {
-		$user_links[] = esc_html( $user->getUserDisplayName() );
-	}
+// create an array of links
+$links_speaker = [];
+$links_moderator = [];
+foreach( $speakers as $user ) {
+	$links_speaker[]   = user_link_2020( $user );
+}
+foreach( $moderators as $user ) {
+	$links_moderator[] = user_link_2020( $user );
 }
 
 
@@ -116,11 +108,21 @@ template_2020( 'header', [
 <div class="container">
 	<h1><?= esc_html( $event->getEventTitle() ) ?> &ndash; <?= esc_html( $conference->getConferenceAcronym() ) ?></h1>
 
-	<?php if( $user_links ): ?>
+	<!-- start speakers -->
+	<?php if( $links_speaker ): ?>
 	<div class="itwikicon-user">
-		<p class="flow-text"><?= __( "di" ) ?> <?= implode( ', ', $user_links ) ?></p>
+		<p class="flow-text"><?= __( "di" ) ?> <?= implode( ', ', $links_speaker ) ?></p>
 	</div>
 	<?php endif ?>
+	<!-- end speakers -->
+
+	<!-- start moderator -->
+	<?php if( $links_moderator ): ?>
+	<div class="itwikicon-user">
+		<p><?= __( "Moderatori:" ) ?> <?= implode( ', ', $links_moderator ) ?>.</p>
+	</div>
+	<?php endif ?>
+	<!-- end speaker -->
 
 	<!-- Start files -->
 	<?php $sharables = $event->factorySharebleByEvent()

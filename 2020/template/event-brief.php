@@ -20,6 +20,7 @@ $users =
 	( new QueryEventUser() )
 		->joinUser()
 		->whereEvent( $event )
+		->whereEventUserIsSpeaker()
 		->orderByEventUserOrder()
 		->queryGenerator();
 ?>

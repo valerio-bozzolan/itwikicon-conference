@@ -54,6 +54,7 @@ TemplateArg::add( 'chi' );
 TemplateArg::add( 'giorno' );
 TemplateArg::add( 'ora inizio' );
 TemplateArg::add( 'ora fine' );
+TemplateArg::add( 'moderatori' );
 TemplateArg::add( 'traccia', function ( $track ) use ( $ROOMS ) {
 
 	$track = $ROOMS[ $track ] ?? null;
@@ -163,6 +164,7 @@ foreach( $queries as $query ) {
 					// $pageid
 					$event_title       = TemplateArgValue::findAndGetValue( $template_values, 'titolo' );
 					$event_who         = TemplateArgValue::findAndGetValue( $template_values, 'chi' );
+					$event_moderators  = TemplateArgValue::findAndGetValue( $template_values, 'moderatori' );
 					$abstract          = TemplateArgValue::findAndGetValue( $template_values, 'abstract' );
 					$note              = TemplateArgValue::findAndGetValue( $template_values, 'note' );
 					$giorno            = TemplateArgValue::findAndGetValue( $template_values, 'giorno' );
@@ -254,64 +256,71 @@ foreach( $queries as $query ) {
 					}
 
 					// wiki usernames
-					$wiki_usernames = suck_wiki_usernames( $event_who );
-					foreach( $wiki_usernames as $wiki_username ) {
+					$wiki_usernames = [
+						'speaker'   => suck_wiki_usernames( $event_who ),
+						'moderator' => suck_wiki_usernames( $event_moderators ),
+					];
 
-						// check if an user associated to this Meta-wiki nick exists
-						$user_talk =
-							( new QueryUser() )
-								->whereMetaUsername( $wiki_username )
-								->queryRow();
+					foreach( $wiki_usernames as $role => $users ) {
+						foreach( $users as $wiki_username ) {
 
-						if( $user_talk ) {
+							// check if an user associated to this Meta-wiki nick exists
+							$user_talk =
+								( new QueryUser() )
+									->whereMetaUsername( $wiki_username )
+									->queryRow();
 
-							$user_talk_ID = $user_talk->getUserID();
+							if( $user_talk ) {
+
+								$user_talk_ID = $user_talk->getUserID();
 
 
-						} else {
+							} else {
 
-							// eventually guess the user surname
-							$name_parts = explode( ' ', $wiki_username, 2 );
-							$user_name    = $name_parts[0] ?? $wiki_username;
-							$user_surname = $name_parts[1] ?? '';
+								// eventually guess the user surname
+								$name_parts = explode( ' ', $wiki_username, 2 );
+								$user_name    = $name_parts[0] ?? $wiki_username;
+								$user_surname = $name_parts[1] ?? '';
 
-							// eventually strip "(ASD)" from surname
-							if( $user_surname ) {
-								$user_surname_parts = explode( ' (', 2 );
-								$user_surname = $user_surname_parts[0] ?? $user_surname;
+								// eventually strip "(ASD)" from surname
+								if( $user_surname ) {
+									$user_surname_parts = explode( ' (', 2 );
+									$user_surname = $user_surname_parts[0] ?? $user_surname;
+								}
+
+								// create the User
+								( new QueryUser() )
+									->insertRow( [
+										User::UID       => generate_slug( $wiki_username ),
+										User::NAME      => $user_name,
+										User::SURNAME   => $user_surname,
+										User::META_WIKI => $wiki_username,
+										User::IS_PUBLIC => 1,
+										User::IS_ACTIVE => 0,
+										USER::ROLE      => 'user',
+									] );
+
+								echo "Creating $wiki_username\n";
+								$user_talk_ID = last_inserted_ID();
 							}
 
-							// create the User
-							( new QueryUser() )
-								->insertRow( [
-									User::UID       => generate_slug( $wiki_username ),
-									User::NAME      => $user_name,
-									User::SURNAME   => $user_surname,
-									User::META_WIKI => $wiki_username,
-									User::IS_PUBLIC => 1,
-									User::IS_ACTIVE => 0,
-									USER::ROLE      => 'user',
-								] );
-
-							echo "Creating $wiki_username\n";
-							$user_talk_ID = last_inserted_ID();
-						}
-
-						// check if that User is related to this Event
-						$user_talk_relation =
+							// check if that User is related to this Event
+							$user_talk_relation =
 							( new Query() )
 								->from( 'event_user' )
 								->whereInt( User::ID,  $user_talk_ID )
 								->whereInt( Event::ID, $event_ID     )
 								->queryRow();
 
-						// relate the User to this Event
-						if( !$user_talk_relation ) {
-							echo "Connecting to event...\n";
-							insert_row( 'event_user', [
-								User::ID  => $user_talk_ID,
-								Event::ID => $event_ID,
-							] );
+							// relate the User to this Event
+							if( !$user_talk_relation ) {
+								echo "Connecting $role to event...\n";
+								insert_row( EventUser::T, [
+									User::ID  => $user_talk_ID,
+									Event::ID => $event_ID,
+									EventUser::ROLE => $role,
+								] );
+							}
 						}
 					}
 
