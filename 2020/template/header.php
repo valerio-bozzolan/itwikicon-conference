@@ -57,7 +57,7 @@
       </a>
 
       <ul class="right">
-        <li><a class="smooth-scroll" href="<?= ROOT ?>/#program-day-2"><?= __( "Programma" ) ?></a></li>
+        <li><a class="smooth-scroll" href="<?= ROOT ?>/#program"><?= __( "Programma" ) ?></a></li>
       </ul>
 
     </div>

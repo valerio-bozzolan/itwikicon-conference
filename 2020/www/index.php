@@ -51,7 +51,7 @@ template_2020( 'header', [
 					esc_html( $conference->getConferenceSubtitle() )
 				) ?></p>
 				<p class="flow-text"><?= esc_html( __( "Quest'anno l'evento si terrà completamente online!" ) ) ?></p>
-				<p><a href="#program-day-2" class="btn-large waves-effect blue smooth-scroll"><i class="material-icons left">access_time</i> <?= __( "Programma Completo" ) ?></a></p>
+				<p><a href="#program" class="btn-large waves-effect blue smooth-scroll"><i class="material-icons left">access_time</i> <?= __( "Programma Completo" ) ?></a></p>
 			</div>
 		</div>
 	</div>
