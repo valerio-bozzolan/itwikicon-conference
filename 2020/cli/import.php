@@ -178,6 +178,11 @@ foreach( $queries as $query ) {
 
 					// 24 ottobre
 					$giorno_dd_mm = explode( ' ', $giorno );
+					if( count( $giorno_dd_mm ) !== 2 ) {
+						echo "Skip $giorno\n";
+						continue;
+					}
+
 					$giorno_dd_mm[1] = $MONTHS[ $giorno_dd_mm[1] ]; // ottobre -> 10
 					$event_start = sprintf(
 						'%s-%s-%s %s:00',
