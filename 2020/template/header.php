@@ -46,7 +46,7 @@ $page_url = $url ?? URL;
   <meta name="generator" content="suckless-conference" />
   <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/ItWikiCon2020_Dante.svg/1024px-ItWikiCon2020_Dante.svg.png" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="<?= esc_attr( site_page( $url, true ) ) ?>/" />
+  <meta property="og:url" content="<?= esc_attr( site_page( $page_url, true ) ) ?>" />
   <meta property="og:title" content="<?= esc_attr( $page_title ) ?>" />
   <meta property="og:description" content="La conferenza nazionale dei progetti Wikimedia" />
 </head>
