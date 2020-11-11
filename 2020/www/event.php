@@ -145,6 +145,8 @@ template_2020( 'header', [
 							->whereSharableParent( $sharable )
 							->queryResults();
 					}
+
+					$all_sharables = array_merge( [ $sharable ], $child_sharables );
 				?>
 
 
@@ -168,10 +170,11 @@ template_2020( 'header', [
 								<source src="<?= esc_attr( $child_sharable->getSharablePath() ) ?>" type="<?= esc_attr( $child_sharable->getSharableMIME() ) ?>" />
 							<?php endforeach ?>
 						</video>
-					<?php endif ?>
-					<!-- end if video -->
 
-						<?php foreach( array_merge( [ $sharable ], $child_sharables ) as $child_sharable ): ?>
+						<?= sharable_edit( $event, $sharable ) ?>
+
+						<!-- other video formats -->
+						<?php foreach( $all_sharables as $child_sharable ): ?>
 							<p class="flow-text">
 							<?php printf(
 								__("Scarica in formato %s distribuibile sotto licenza %s."),
@@ -186,7 +189,40 @@ template_2020( 'header', [
 								$sharable->getSharableLicense()->getLink()
 							) ?>
 							</p>
+
+							<?= sharable_edit( $event, $child_sharable ) ?>
+
 						<?php endforeach ?>
+						<!-- end other video formats -->
+
+					<!-- end if video -->
+					<?php else: ?>
+					<!-- start if not video -->
+
+						<!-- downloadable but not video -->
+						<?php foreach( $all_sharables as $child_sharable ): ?>
+							<p class="flow-text">
+							<?php printf(
+								__("Scarica %s distribuibile sotto licenza %s."),
+								HTML::a(
+									$child_sharable->getSharablePath(),
+									icon_2020('attachment', 'left') .
+									esc_html( $child_sharable->getSharableTitle() ),
+									null,
+									null,
+									'target="_blank"'
+								),
+								$sharable->getSharableLicense()->getLink()
+							) ?>
+							</p>
+
+							<?= sharable_edit( $event, $child_sharable ) ?>
+
+						<?php endforeach ?>
+						<!-- downloadable but not video -->
+
+					<?php endif ?>
+					<!-- end if not video -->
 
 				<?php else: ?>
 					<p class="flow-text">
@@ -203,7 +239,11 @@ template_2020( 'header', [
 							$sharable->getSharableLicense()->getLink()
 						) ?>
 					</p>
+
+					<?= sharable_edit( $event, $child_sharable ) ?>
+
 				<?php endif ?>
+
 				</div>
 			</div>
 			<?php endforeach ?>
@@ -211,6 +251,8 @@ template_2020( 'header', [
 	</div>
 	<?php endif ?>
 	<!-- End files -->
+
+	<?= sharable_edit( $event ) ?>
 
 	<?php if( $event->hasEventAbstract() ): ?>
 		<h3><?= __( "Abstract" ) ?></h3>

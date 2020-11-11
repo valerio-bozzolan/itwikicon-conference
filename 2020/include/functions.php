@@ -28,6 +28,8 @@ function template_2020( $template_name, $template_args = [] ) {
 
 /**
  * Spawn a 2020 Event
+ *
+ * @param int $id Event ID
  */
 function event_2020( $id ) {
 
@@ -41,8 +43,8 @@ function event_2020( $id ) {
 		->select( Chapter::fields() )
 		->selectEventHasVideo()
 		->joinConference()
-		->joinTrack( 'LEFT' )
-		->joinRoom(  'LEFT' )
+		->joinTrack(   'LEFT' )
+		->joinRoom(    'LEFT' )
 		->joinChapter( 'LEFT' )
 		->queryRow();
 
@@ -69,6 +71,13 @@ function icon_2020( $name, $classes = null ) {
 	);
 }
 
+/**
+ * Query some Event Users
+ *
+ * @param  Event  $event
+ * @param  string $role Choose 'speaker' or 'moderator'
+ * @return Generator
+ */
 function event_users_2020( $event, $role ) {
 
 	$users =
@@ -82,6 +91,12 @@ function event_users_2020( $event, $role ) {
 	return $users;
 }
 
+/**
+ * Link to an User of the itWikiCon 2020
+ *
+ * @param User $user
+ * @return string HTML firm
+ */
 function user_link_2020( $user ) {
 
 	$name = esc_html( $user->getUserDisplayName() );
@@ -92,4 +107,43 @@ function user_link_2020( $user ) {
 	}
 
 	return $name;
+}
+
+/**
+ * Print the URL to a Sharable
+ *
+ * @param  Event    $event
+ * @param  Sharable $sharable
+ * @param  string   $text
+ * @return string HTML
+ */
+function sharable_edit( $event, $sharable = null, $text = null ) {
+
+	$s = '';
+
+	// no editable, no party
+	if( $event->isEventEditable() ) {
+
+		// displayed text
+		if( !$text ) {
+			$text = $sharable ? __( "modifica" ) : __( "aggiungi" );
+		}
+
+		// edit or creation URL
+		$url = $sharable
+			? $sharable->getSharableEditURL()
+			: Sharable::editURL( [
+				'event_ID' => $event->getEventID(),
+			] );
+
+		// create link
+		$s = HTML::a( $url, esc_html( $text ) );
+	}
+
+	// [edit]
+	if( $s ) {
+		$s = "[$s]";
+	}
+
+	return $s;
 }
