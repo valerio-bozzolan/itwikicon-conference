@@ -77,7 +77,7 @@
 <td class="hide-on-small-only">13:15&nbsp;-&nbsp;13:30</td>
 <td colspan="2" rowspan="4" class="session-break"><b>Pranzo</b> in contemporanea con:<br />
 	<?php event_2020( 247 ) /* Esplorando Busto Arsizio – tour virtuale interattivo */ ?>
-	<?php event_2020( 274 ) /* Il menù del giorno */ ?>
+	<?php event_2020( 274 ) /* Il menù del giorno (astrologico) */ ?>
 </td>
 </tr>
 <tr>
