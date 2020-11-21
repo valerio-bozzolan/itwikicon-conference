@@ -1,7 +1,6 @@
 <?php
 # itWikiCon 2020
-# Copyright (C) 2016, 2017, 2018, 2019, 2020 Valerio Bozzolan, Ludovico Pavesi
-# From Linux Day Torino 2016
+# Copyright (C) 2020 Valerio Bozzolan, Ludovico Pavesi
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -32,10 +31,12 @@ if( !$conference ) {
 	) );
 }
 
+// print the website header
 template_2020( 'header', [
 	'conference' => $conference,
 ] );
 
+// query the Conference Events
 $events = ( new QueryEvent() )
 	->whereConference( $conference )
 	->orderBy( Event::START )
@@ -55,6 +56,7 @@ $events = ( new QueryEvent() )
 
 <?php
 
+// print the website footer
 template_2020( 'footer', [
 	'conference' => $conference,
 ] );
