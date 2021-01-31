@@ -15,6 +15,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Template used to display a single event briefly
+ *
+ * Variables that should be available:
+ *
+ *  $event Event: current Event
+ *     Note that the Event should have these additional attributes:
+ *        event_has_video
+ *        event_has_document
+ */
+
 // query all the Users maintaining this Event
 $users =
 	( new QueryEventUser() )
@@ -94,12 +105,23 @@ $users =
 		<?php if( $event->get( 'event_has_video' ) ): ?>
 			<p>
 				<a class="btn blue waves-effect" href="<?= esc_attr( $event->getEventURL() ) ?>">
-					<?= icon_2020( 'play_arrow', 'right' ) ?>
+					<?= icon_2020( 'play_arrow', 'left' ) ?>
 					<?= __( "Rivedi" ) ?>
 				</a>
 			</p>
 		<?php endif ?>
 		<!-- end event player -->
+
+		<!-- start event documents -->
+		<?php if( $event->get( 'event_has_document' ) ): ?>
+			<p>
+				<a class="btn blue waves-effect" href="<?= esc_attr( $event->getEventURL() ) ?>">
+					<?= icon_2020( 'attachment', 'left' ) ?>
+					<?= __( "Materiali" ) ?>
+				</a>
+			</p>
+		<?php endif ?>
+		<!-- end event documents -->
 
 		<?php if( $event->isEventEditable() ): ?>
 			<?= HTML::a(

@@ -1,6 +1,6 @@
 <?php
 # Linux Day Torino website
-# Copyright (C) 2019, 2020 Valerio Bozzolan and contributors
+# Copyright (C) 2019, 2020, 2021 Valerio Bozzolan and contributors
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -42,6 +42,7 @@ function event_2020( $id ) {
 		->select( Room::fields() )
 		->select( Chapter::fields() )
 		->selectEventHasVideo()
+		->selectEventHasDocument()
 		->joinConference()
 		->joinTrack(   'LEFT' )
 		->joinRoom(    'LEFT' )

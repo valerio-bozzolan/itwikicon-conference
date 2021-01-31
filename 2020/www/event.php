@@ -156,6 +156,7 @@ template_2020( 'header', [
 
 					<!-- if video -->
 					<?php if( $sharable->isSharableVideo() ): ?>
+
 						<h3><?= __( "Rivedi intervento" ) ?></h3>
 
 						<?php if( $event->isEventPassed() ): ?>
