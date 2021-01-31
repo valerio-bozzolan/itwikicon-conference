@@ -59,6 +59,12 @@ if( site_page( $_SERVER['REQUEST_URI'], true ) !== $room->getRoomURL( true ) ) {
 // another eve
 $events =
 	( new QueryEvent() )
+		->select( Event     ::fields() )
+		->select( Conference::fields() )
+		->select( Track     ::fields() )
+		->select( Chapter   ::fields() )
+		->select( Room      ::fields() )
+		->selectEventHasVideo()
 		->joinConference()
 		->joinTrackChapterRoom()
 		->whereRoom( $room )
