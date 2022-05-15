@@ -37,11 +37,10 @@ $page_url = $url ?? URL;
   ) ) ?></title>
 
   <!-- CSS  -->
-  <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
   <link href="<?= ROOT ?>/css/material-design-iconfont/material-design-icons.css" rel="stylesheet" />
   <link href="<?= ROOT ?>/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="<?= ROOT ?>/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link rel="icon" type="image/jpeg" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/ItWikiCon_2020_coin_version.svg/36px-ItWikiCon_2020_coin_version.svg.png" />
+  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/ItWikiCon_2020_coin_version.svg/36px-ItWikiCon_2020_coin_version.svg.png" />
   <link rel="copyright" href="//creativecommons.org/licenses/by-sa/4.0/" />
   <meta name="generator" content="suckless-conference" />
   <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/ItWikiCon2020_Dante.svg/1024px-ItWikiCon2020_Dante.svg.png" />
