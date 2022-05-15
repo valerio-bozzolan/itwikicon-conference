@@ -1,0 +1,118 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+#logo-container {
+	display:none;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+
+.parallax-container .section {
+  width: 100%;
+}
+
+/* the big image in the homepage */
+#leading-banner {
+	margin:1em;
+}
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+/* desktop */
+@media only screen and (min-width: 993px) {
+
+	#what-is-it-section {
+		margin-top: 2rem;
+	}
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+.session-break {
+	background-color:#5c5c5c20;
+	text-align:center;
+}
+
+.session-presentation {
+	background-color: #5c000050;
+}
+
+.session-guest {
+	background-color: #33996650;
+}
+
+.session-talk {
+/*	background-color: #5c000050;*/
+}
+
+.session-plenary {
+	background-color: #137bc050;
+	text-align:center;	
+}
+
+.event-brief-title {
+	line-height:1.3;
+	margin-top:0;
+	margin-bottom:0.5rem;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+/* the Matomo pixel should not take space */
+.matomo-pixel {
+	position:fixed;
+	top:0;
+}
+
+.mw-parser-output ul,
+.mw-parser-output ul {
+	padding-left:revert;
+}
+
+.mw-parser-output ul > li {
+	list-style-type: disc;
+}
