@@ -157,7 +157,14 @@ template_2020( 'header', [
 					<!-- if video -->
 					<?php if( $sharable->isSharableVideo() ): ?>
 
-						<h3><?= __( "Rivedi intervento" ) ?></h3>
+						<?php if( $sharable->hasSharableTitle() ): ?>
+							<h3><?php printf(
+								__( "Rivedi: %s" ),
+								'<em>' . esc_html( $sharable->getSharableTitle() ) . '</em>'
+							) ?></h3>
+						<?php else: ?>
+							<h3><?= __( "Rivedi intervento" ) ?></h3>
+						<?php endif ?>
 
 						<?php if( $event->isEventPassed() ): ?>
 						<div class="event-hour">
