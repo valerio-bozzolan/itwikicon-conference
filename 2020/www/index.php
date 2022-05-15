@@ -50,7 +50,8 @@ template_2020( 'header', [
 					'<b>' . esc_html( $conference->getConferenceTitle() ) . '</b>',
 					esc_html( $conference->getConferenceSubtitle() )
 				) ?></p>
-				<p class="flow-text"><?= esc_html( __( "Quest'anno l'evento si terrà completamente online!" ) ) ?></p>
+
+				<p class="flow-text"><?= esc_html( __( "Quest'anno l'evento si terrà per la prima volta completamente online!" ) ) ?></p>
 				<p><a href="#program" class="btn-large waves-effect blue smooth-scroll"><i class="material-icons left">access_time</i> <?= __( "Programma Completo" ) ?></a></p>
 			</div>
 		</div>
@@ -70,7 +71,7 @@ template_2020( 'header', [
 	<div class="col s12">
 		<div class="card-panel orange">
 			<p class="flow-text"><?= __( "Stanco dei soliti questionari compilabili in meno di un'ora e 45 minuti? Prova il nostro!" ) ?></p>
-			<p><a href="https://survey.gitpull.it/index.php/543181?lang=it" class="btn-large blue waves-effect">
+			<p><a href="https://meta.wikimedia.org/wiki/ItWikiCon/2020/Sondaggio/2" class="btn-large blue waves-effect">
 				<i class="material-icons left">insert_chart</i>
 				Questionario finale!
 			</a>
