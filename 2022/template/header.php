@@ -60,7 +60,7 @@ $page_url = $url ?? URL;
       </a>
 
       <ul class="right">
-        <li><a class="smooth-scroll" href="<?= ROOT ?>/#program"><?= __( "Programma" ) ?></a></li>
+        <li><a class="smooth-scroll" href="<?= ROOT ?>/#info"><?= __( "Info" ) ?></a></li>
       </ul>
 
     </div>
