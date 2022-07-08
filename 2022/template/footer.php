@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ?>
-  <footer class="page-footer teal">
+  <footer class="page-footer blue">
     <div class="container">
       <div class="row">
         <div class="col s12">
