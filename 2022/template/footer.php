@@ -22,7 +22,7 @@
         <div class="col s12">
           <h5 class="white-text"><?= esc_html( $conference->getConferenceTitle() ) ?></h5>
           <p class="grey-text text-lighten-4"><?= sprintf(
-		__( "Un ringraziamento a tutti i volontari che stanno rendendo possibile questa edizione. La prima edizione post-pandemia, interamente progettata con %s. Buon divertimento!" ),
+		__( "Un ringraziamento a tutti i volontari che stanno rendendo possibile questa edizione. La prima edizione post-pandemia dal vivo, progettata il più possibile con %s. Buon divertimento!" ),
 		HTML::a(
 			__( "https://it.wikipedia.org/wiki/Software_libero" ),
 			__( "Software Libero" ),
@@ -35,7 +35,7 @@
 			Licenses::instance()->get( 'cc-by-sa-4.0' )->getLink( 'blue-text text-lighten-5' )
 		) ?></p>
 
-	  <p><a href="https://meta.wikimedia.org/wiki/itWikiCon/2022/" class="btn waves-effect white black-text"><i class="material-icons left">sentiment_very_satisfied</i><?= __( "Domande frequenti" ) ?></a></p>
+	  <p><a href="https://meta.wikimedia.org/wiki/itWikiCon/2022/FAQ" class="btn waves-effect white black-text"><i class="material-icons left">sentiment_very_satisfied</i><?= __( "Domande frequenti" ) ?></a></p>
         </div>
       </div>
     </div>
@@ -72,4 +72,4 @@
   <?php template_2022( 'matomo' ) ?>
 
   </body>
-</html>
+</html><?php
