@@ -44,14 +44,18 @@ template_2022( 'header', [
 	</div>
 	<div class="col s12 l4">
 		<div class="card-panel hoverable" id="what-is-it-section">
-			<h2><?= __( "Cos'è" ) ?></h2>
 			<p class="flow-text"><?= sprintf(
 				__( "L'%s è %s." ),
 				'<b>' . esc_html( $conference->getConferenceTitle() ) . '</b>',
 				esc_html( $conference->getConferenceSubtitle() )
 			) ?></p>
-				<p class="flow-text"><?= esc_html( __( "Finalmente l'evento si terrà nuovamente di persona… a Verbania!" ) ) ?></p>
-			<p><a href="#step-1" class="btn-large waves-effect blue smooth-scroll"><?= icon_2022( 'info', 'left' ) ?> <?= __( "Info" ) ?></a></p>
+				<p class="flow-text"><?= sprintf(
+					esc_html( __( "Finalmente l'evento si terrà nuovamente di persona… a %s!" ) ),
+					HTML::tag( 'b', "Verbania" )
+				) ?></p>
+				<p>Dal <b>30 settembre</b> al <b>2 ottobre</b>.</p>
+			</p>
+			<p><a href="#step-1" class="btn-large waves-effect blue smooth-scroll"><?= icon_2022( 'group_add', 'left' ) ?> <?= __( "Partecipa" ) ?></a></p>
 		</div>
 	</div>
 </div>
@@ -83,10 +87,10 @@ template_2022( 'header', [
 		<div id="step-2"></div>
 		<div class="card-panel">
 			<h3 class="blue-text">Passo 2 - Pagamento</h3>
-			<p>Per favore aiuta questo evento organizzato dalla community, pagando la quota di partecipazione che copre pasti catering ecc.<br />
-			Questa spesa ti sarà rimborsata se richiederai la borsa di partecipazione e se non saranno terminate.<br />
-			Apri la pagina e clicca su <em>Contribuisci</em>:<br />
-			<br />Non usiamo PayPal ma Splitted che ha sede in provincia di Milano. È semplice da usare.<br />
+			<p>Per favore aiuta questo evento organizzato dalla community, pagando la quota di partecipazione di 25€ che copre pasti catering ecc.<br />
+			Questa spesa può essere rimborsata richiedendo una borsa di partecipazione.<br />
+			Non usiamo PayPal. Usiamo Splitted che ha sede in provincia di Milano ed è semplice da usare. Apri la pagina e clicca su <em>CONTRIBUISCI</em>:<br />
+
 				<em><small><?= sprintf( __( "Tempo richiesto: %d minuti" ), 2 ) ?></small></em><br />
 				<a class="btn-large blue waves-effect" href="https://splitted.it/itwikicon-2022/" target="_blank"><?=
 					icon_2022( 'payment', 'left' )
@@ -94,6 +98,7 @@ template_2022( 'header', [
 					__( "Pagamento partecipazione" )
 				?></a>
 			</p>
+			<p><small>Per favore conserva la tua ricevuta fino alla fine dell'evento.</small></p>
 		</div>
 	</div>
 
@@ -101,7 +106,7 @@ template_2022( 'header', [
 		<div id="step-3"></div>
 		<div class="card-panel">
 			<h3 class="blue-text">Passo 3 - Viaggio ed esigenze alimentari</h3>
-			<p>Compilare il questionario anonimo su viaggio e le tue esigenze alimentari.<br />
+			<p>Ora compila il questionario anonimo su viaggio e le tue esigenze alimentari.<br />
 			<p>Notare che è separato così questi dati sensibili rimangono anonimi.<br />
 				<small><?= sprintf( __( "Tempo richiesto: %d minuti" ), 2 ) ?></small><br />
 				<a class="btn-large blue waves-effect" href="https://survey.itwikicon.org/index.php/471745"><?=
