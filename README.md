@@ -25,3 +25,5 @@ git clone https://gitpull.it/source/suckless-php.git
 # a framework to interact with MediaWiki's APIs
 git clone https://gitpull.it/source/boz-mw.git
 ```
+
+Then enter in the `itwikicon-conference` directory and hack!
